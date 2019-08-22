@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password',
+        'id_usuario', 'email', 'password',
     ];
 
     /**
@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token','pivot'
     ];
 
     /**
@@ -37,6 +37,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function resposavel(){
+        return $this->hasOne('App\Responsavel','id_usuario');
+    } 
+
+    public function permissao(){
+        return $this->belongsToMany('App\Permissao','usuario_permissao','id_usuario','id_permissao');
+    }
+
 
     protected $table = 'usuario';
     protected $primaryKey = 'id_usuario';

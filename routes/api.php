@@ -13,9 +13,22 @@ use Illuminate\Http\Request;
 |
 */
 header('Access-Control-Allow-Origin: http://localhost:3000');
+header('Access-Control-Allow-Methods : GET,POST,PUT,DELETE,OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::group(['middleware' => 'auth:api'], function (){
+    Route::group(['prefix' => '/empresa'], function() {
+        Route::get('/', 'EmpresaController@show');
+        Route::post('/', 'EmpresaController@store');
+    }); 
+    
+    Route::group(['prefix' => '/responsavel'], function() {
+        Route::get('/logado','ResponsavelController@getResponsavelLogado');
+    });
+
+    Route::get('/user-authorities', 'UsuarioController@getAuthorities');
+    Route::get('/setor', "SetorController@show");
+    
 });
 
-Route::middleware('auth:api')->get('/setor', "SetorController@listAll");
