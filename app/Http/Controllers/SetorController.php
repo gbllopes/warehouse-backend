@@ -9,7 +9,7 @@ class SetorController extends Controller
 {
     
 
-    public function show(){
+    public function show(){  
         return Setor::all();
     }
 

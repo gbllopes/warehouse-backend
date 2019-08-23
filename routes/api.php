@@ -27,8 +27,13 @@ Route::group(['middleware' => 'auth:api'], function (){
         Route::get('/logado','ResponsavelController@getResponsavelLogado');
     });
 
+    Route::group (['prefix' => '/products'], function(){
+        Route::get('/company/{id}', 'ProdutoController@showByIdEmpresa');
+        Route::post('/', "ProdutoController@store");
+    });
+
     Route::get('/user-authorities', 'UsuarioController@getAuthorities');
     Route::get('/setor', "SetorController@show");
-    
+       
 });
 
