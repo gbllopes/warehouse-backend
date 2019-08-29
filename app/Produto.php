@@ -10,7 +10,11 @@ class Produto extends Model
         'no_produto','fabricante','qtde_produto','codigo_produto','id_setor','id_empresa'
     ];
 
-    
+    protected $hidden = [
+        'id_empresa',
+        'id_setor'
+    ];
+
     public function empresa(){
         return $this->belongsTo(Empresa::class, 'id_empresa', 'id_empresa');
     }

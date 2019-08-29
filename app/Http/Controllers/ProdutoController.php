@@ -28,6 +28,27 @@ class ProdutoController extends Controller
     }
 
     public function showByIdEmpresa($idEmpresa){
-        return Produto::where('id_empresa', $idEmpresa)->with('setor')->get();
+        return Produto::where('id_empresa', $idEmpresa)->with('setor')->with('empresa')->get();
+    }
+
+    public function showByNomeProduto($nomeProduto){
+        return Produto::where('no_produto', 'like','%'.$nomeProduto.'%')->get();
+    }
+
+    public function editarProduto($id, Request $request){
+        $produto = Produto::find($id);
+        $produto->fill($request->only([
+            'no_produto',
+            'fabricante',
+            'qtde_produto',
+            'codigo_produto',
+        ]));
+        $produto->id_setor = $request->setor['id_setor'];
+        $produto->save();
+    }
+
+
+    public function deletarProduto($id){
+        Produto::find($id)->delete();
     }
 }
